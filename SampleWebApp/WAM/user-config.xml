@@ -1,0 +1,23 @@
+  <users>
+    <user name='JohnDoe' pwd='password'>
+        <att name='preferredName' value='John Doe'/>
+        <att name='givenName' value='John'/>
+        <att name='preferredLanguage' value='eng'/>
+        <att name="ldsgender" value="M"/>
+    </user>
+    <user name="StakePresident" pwd="password1">
+      <att name="dn" value="cn=ngiEnglishStakePresident,ou=Ext,ou=people,o=lds" />
+      <att name="preferredname" value="Charles Gibson" />
+      <att name="givenname" value="Charles" />
+      <att name="sn" value="Cobb" />
+      <att name="jobtitle" value="Stake President" />
+      <att name="ldsaccountid" value="3481475860110623" />
+      <att name="ldsbdate" value="19700318" />
+      <att name="ldsemailaddress" value="stakePresTEST@ldschurch.org" />
+      <att name="ldsmrn" value="8230456789NGI" />
+      <att name="workphone" value="+1(801)123-4567" />
+      <att name="preferredlanguage" value="EN" />
+      <att name="ldspositions" value="p1/7u237035/5u511161/" />
+    </user>
+    
+  </users>

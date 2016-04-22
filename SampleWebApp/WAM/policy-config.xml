@@ -1,0 +1,91 @@
+<deployment at='2013-01-31_16:25:12.205-0700' >
+  <environment id='dev' host='PXM-icsproductid.ldschurch.org (exposee)' />
+  <application id='icsproductid.ldschurch.org/' authHost='icsproductid.ldschurch.org' cctx='/' >
+    <authentication scheme='login' name='Anonymous Authentication' >    </authentication>
+    <authorization failure-redirect-url='/denied.html'>
+      <default format='exposee' value='Allow Authenticated Users'>
+        <headers>
+          <failure>
+            <redirect value='/denied.html' />
+          </failure>
+          <success>
+            <profile-att name='policy-cn' attribute='cn' type='HeaderVar' />
+            <profile-att name='policy-preferredname' attribute='preferredname' type='HeaderVar'/>
+            <profile-att name='policy-gender' attribute='ldsgender' type='HeaderVar' />
+            <profile-att name='policy-preferredlanguage' attribute='preferredlanguage' type='HeaderVar' />    
+            <profile-att name='policy-ldsaccountid' attribute='ldsaccountid' type='HeaderVar' />                
+          </success>
+        </headers>
+      </default>
+      <rule name='Allow All Members' enabled='true' allow-takes-precedence='true' >
+        <allow>
+          <condition  type='ldap' >ldap:///ou=People,o=lds??sub?(ldsmrn=*)</condition>
+        </allow>
+      </rule>
+      <rule name='Allow Authenticated Users' enabled='true' allow-takes-precedence='false' >
+        <allow>
+          <condition  type='role' value='Anyone' />
+        </allow>
+      </rule>
+      <rule name='~~default-headers~~' enabled='false' allow-takes-precedence='false' >
+      </rule>
+    </authorization>
+    <policy name='secure{/.../*,*}'>
+      <url>secure{/.../*,*}</url>
+      <operations>GET,HEAD,POST</operations>
+      <authentication scheme='login' name='WAM-DEV LDS Login Form' >
+      </authentication>
+      <authorization format='exposee' value='Allow Authenticated Users'>
+        <headers>
+          <success>
+            <profile-att name='policy-cn' attribute='cn' type='HeaderVar' />
+            <profile-att name='policy-preferredname' attribute='preferredname' type='HeaderVar' />
+          </success>
+          <failure>
+            <redirect value='/denied.html' />
+          </failure>
+        </headers>
+      </authorization>
+    </policy>
+    <policy name='members{/.../*,*}'>
+      <url>members{/.../*,*}</url>
+      <operations>DELETE,GET,HEAD,POST,PUT</operations>
+      <authentication scheme='login' name='WAM-DEV LDS Login Form' >
+      </authentication>
+      <authorization format='exposee' value='Allow All Members'>
+        <headers>
+          <success>
+            <fixed-value name='policy-signin' value='signmein' type='HeaderVar' />
+            <fixed-value name='policy-signout' value='signmeout' type='HeaderVar' />
+            <profile-att name='policy-cn' attribute='cn' type='HeaderVar' />
+            <profile-att name='policy-gender' attribute='ldsgender' type='HeaderVar' />
+            <profile-att name='policy-preferredlanguage' attribute='preferredlanguage' type='HeaderVar' />
+          </success>
+          <failure>
+            <redirect value='/denied.html' />
+          </failure>
+        </headers>
+      </authorization>
+    </policy>
+    <policy name='{/.../*,*}'>
+      <url>members{/.../*,*}</url>
+      <operations>DELETE,GET,HEAD,POST,PUT</operations>
+      <authentication scheme='login' name='WAM-DEV LDS Login Form' >
+      </authentication>
+      <authorization format='exposee' value='Allow All Members'>
+        <headers>
+          <success>
+            <fixed-value name='policy-signin' value='signmein' type='HeaderVar' />
+            <fixed-value name='policy-signout' value='signmeout' type='HeaderVar' />
+            <profile-att name='policy-cn' attribute='cn' type='HeaderVar' />
+            <profile-att name='policy-gender' attribute='ldsgender' type='HeaderVar' />
+            <profile-att name='policy-preferredlanguage' attribute='preferredlanguage' type='HeaderVar' />
+          </success>
+          <failure>
+            <redirect value='/denied.html' />
+          </failure>
+        </headers>
+      </authorization>
+    </policy>
+  </application>
+</deployment>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?alias http-port=80?>
+<?file-alias usr-src-xml="user-config.xml" default="<users/>"?>
+<?file-alias policy-src-xml="policy-config.xml"?>
+
+<config proxy-port="{{http-port}}" console-port="1776">
+    <console-recording sso="true" rest="true" max-entries="100" enable-debug-logging='true'/>
+    <sso-cookie name="wamulator" domain=".ldschurch.org"/>
+
+    <sso-traffic>
+        <by-site host="sampleweb.ldschurch.org" port="{{http-port}}">
+            <cctx-mapping thost="127.0.0.1" tport="8000">
+                <policy-source>xml={{policy-src-xml}}</policy-source>
+            </cctx-mapping>
+        </by-site>
+    </sso-traffic>
+    
+    <user-source type='xml'>xml={{usr-src-xml}}</user-source>
+</config>
